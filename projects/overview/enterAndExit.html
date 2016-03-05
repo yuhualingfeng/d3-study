@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>enter and exit</title>
+</head>
+<body>
+
+	<p>nice to meet you d3</p>
+	<p>nice to meet you d3</p>
+	<p>nice to meet you d3</p>
+	<p>nice to meet you d3</p>
+	<p>nice to meet you d3</p>
+	
+	<script src='../bower_components/d3/d3.js'></script>
+	<script>
+		// d3.select('body').selectAll('p').data([4,8,15,16,23,42]).enter().
+		// append('p').text(function(d){
+
+		// 	return "I'm  number" + d +"!";
+
+		// });
+
+		var p = d3.select('body').selectAll('p').data([4,8,15,16,23,42]).text(function(d){
+			return d;
+		});
+
+		p.enter().append('p').text(function(d){return d;});
+
+		p.exit().remove();
+	</script>
+</body>
+</html>

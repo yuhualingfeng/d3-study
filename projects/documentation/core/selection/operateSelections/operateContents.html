@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>operateSelections</title>
+</head>
+<body>
+
+	<p>nice to meet you d3</p>
+	<p>nice to meet you d3</p>
+	<p>nice to meet you d3</p>
+	<p>nice to meet you d3</p>
+	<p>nice to meet you d3</p>
+
+
+	<input type="text" value='yuhualingfeng'/>
+	<input type="checkbox" checked/>
+
+	<div>good afternoon!</div>
+
+	<div class='div1'>nice to meet you d3</div>
+
+	<div id="setHtml">
+		<p>this element will be replace</p>
+		<p>this element will be replace</p>
+		<p>this element will be replace</p>
+	</div>
+
+	<h1 id='beRemove'>this title will be removed</h1>
+
+	<div class="append">
+		<div>their will be append a svg element</div>
+	</div>
+
+	<div class="preappend">
+		<div>their will be preappend svg element</div>
+	</div>
+
+	
+	<script src='/bower_components/d3/d3.js'></script>
+
+	<script>
+
+	//selection.attr(name[,value])
+
+	d3.selectAll('p').attr('data-index',function(d,i){
+		console.log(this);
+		return i;
+	});
+
+	console.log(d3.select('p').attr('data-index'));
+
+	d3.selectAll('p').attr({'data-bind':'click','data-name':'p'});
+
+	//selection.classed(name[,value])
+
+	d3.select(d3.selectAll('p')[0][0]).classed('p1');
+	d3.select(d3.selectAll('p')[0][1]).classed('p2',true);
+	d3.select(d3.selectAll('p')[0][2]).classed('p3',function(d,i){return true});
+	d3.select(d3.selectAll('p')[0][3]).classed({'p4':true,'p4_1':true});
+	d3.select(d3.selectAll('p')[0][4]).classed({'p5 p5_1':true});
+
+	//selection.style(name[,value[,priority]])
+
+	d3.select(d3.selectAll('p')[0][0]).style('color','red');
+	d3.select(d3.selectAll('p')[0][1]).style('font-size','18px','important');
+	d3.select(d3.selectAll('p')[0][2]).style('background',function(d,i){return 'blue'});
+	d3.select(d3.selectAll('p')[0][3]).style({'font-size':'30px','font-weight':'bold'});
+	console.log(d3.select(d3.selectAll('p')[0][4]).style('color'));
+
+	//selection.property(name[,value])
+
+	d3.select('input[type=text]').property('value','programer');
+	d3.select('input[type=checkbox]').property('checked',false);
+	d3.select('input[type=checkbox]').property({name:'checkbox',value:false});
+
+
+	//selection.text([value])
+
+	d3.select('div').text('good morning!');
+	d3.select('.div1').text(function(d,i){
+		return 'its a good day';
+	});
+
+	//selection.html([value])
+	//SVG元素和其它非HTML元素不支持innerHTML属性，因此与selection.html不相容。请考虑使用XMLSerializer转换DOM树为文本。灵参见innersvg polyfill，它提供了一个垫片以支持SVG元素的innerHTML属性
+
+	d3.select('#setHtml').html('<h2>this is a new element</h2>');
+
+	// d3.select('#setHtml').html(function(d,i){
+	// 	return null;
+	// });
+
+
+
+	//selection.append(name)
+
+	console.log(d3.select('.append').append('svg'));
+
+	//seleciton.insert(name[,before])
+
+	console.log(d3.select('.preappend').insert('svg',':first-child'));
+
+
+
+	//selection.remove()
+
+	d3.select('#beRemove').remove();
+
+
+
+
+
+
+
+	</script>
+</body>
+</html>

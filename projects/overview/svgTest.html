@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	rect{
+		background:red;
+	}
+	</style>
+</head>
+<body>
+
+	<svg width='800' height='400'>
+		<g>
+			<rect width='200' height='200'></rect>
+			<text dy=".75em" y="6" x="22.5" text-anchor="middle">92</text>
+		</g>
+	</svg>
+	<script src='../bower_components/d3/d3.js'></script>
+	<script>
+		d3.select('rect').on('click',function(d,i){
+			console.log(d3.event);
+		});
+	</script>
+</body>
+</html>

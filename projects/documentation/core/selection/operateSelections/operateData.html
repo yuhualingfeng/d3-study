@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>operateData</title>
+</head>
+
+<body>
+	
+	<script src='/bower_components/d3/d3.js'></script>
+	<script>
+
+		//selection.data(values[,key])
+		//values:[Array|Function]
+
+		var matrix = [
+		[11975,5871,8916,2868],
+		[1951,10048,2060,6171],
+		[8010,16145,8090,8045],
+		[1013,990,940,6907]
+		];
+
+		var tr = d3.select('body').append('table').selectAll('tr').data(matrix)
+		.enter().append('tr');
+		var td = tr.selectAll('td').data(function(d){return d;})
+		.enter()
+		.append('td').text(function(d){return d;});
+
+		//selection.enter()
+
+		d3.select('body').selectAll('div')
+		.data([4,8,15,16,23,43])
+		.enter()
+		.append("div")
+		.text(function(d){return d;});
+
+
+		d3.select('body').append('svg').style({width:'100%'}).selectAll('circle').data([1,1,1,1,1]).enter()
+		.append('circle').attr({'r':function(d,i){return 40;},cy:40,cx:function(d,i){
+			return 40+i*(80+5);
+		}});
+
+		// var updata_sel = d3.selectAll('circle').data([1,1,1,1,1,1,1,1]);
+		// update_sel.attr({fill:'red'});
+		// update_sel.enter().append("circle").attr({})
+
+		//selection.exit()
+
+		var div = d3.select("body").selectAll("div")
+		.data([1,2,4,8,16,32],function(d){return d;});
+
+		div.enter().append('div').text(function(d){return d;});
+
+		div.exit().remove();
+
+		d3.selectAll('div').attr('index',function(d,i){
+			return i;
+		});
+
+
+
+
+		//18381658012
+
+
+
+
+
+
+	</script>	
+</body>
+</html>

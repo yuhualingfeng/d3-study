@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <p class='p1'>nice to meet you d3</p>
+    <hr/>
+    <p class="p2">nice to meet you d3</p>
+    <hr/>
+    <p class="p3">nice to meet you d3</p>
+    <p class="p3">nice to meet you d3</p>
+    <p class="p3">nice to meet you d3</p>
+    <p class="p3">nice to meet you d3</p>
+    <p class="p3">nice to meet you d3</p>
+    <hr/>
+    <p class="p4">nice to meet you d3</p>
+    <p class="p4">nice to meet you d3</p>
+    <p class="p4">nice to meet you d3</p>
+    <p class="p4">nice to meet you d3</p>
+    <p class="p4">nice to meet you d3</p>
+    <p class="p4">nice to meet you d3</p>
+    <p class="p4">nice to meet you d3</p>
+    <p class="p4">nice to meet you d3</p>
+    <hr/>
+    <p class="p5">nice to meet you d3</p>
+    <p class="p5">nice to meet you d3</p>
+    <p class="p5">nice to meet you d3</p>
+    <p class="p5">nice to meet you d3</p>
+    <p class="p5">nice to meet you d3</p>
+    <p class="p5">nice to meet you d3</p>
+
+
+    <script src='../bower_components/d3/d3.js'></script>
+    <script>
+    d3.selectAll('.p1').style('color', 'red');
+
+    d3.select('body').transition().style('background-color', 'black');
+
+    d3.selectAll('.p2').style('color', function() {
+        return "hsl" + Math.random() * 360 + ",100%,50%)";
+    });
+
+    d3.selectAll('.p3').style('color', function(d, i) {
+        return i % 2 ? "green" : "blue";
+    });
+
+    var data = [4, 8, 15, 16, 23, 42];
+
+    d3.selectAll('.p4').data(data).style("font-size", function(d) {
+        return d + "px";
+    });
+
+    d3.select('body').selectAll('.p5').data([4, 8, 15, 16, 23, 42])
+        .enter().append('p').text(function(d) {
+            return "I'm number" + d + "!";
+        });
+
+    d3.select("body").selectAll("p")
+        .data([4, 8, 15, 16, 23, 42])
+        .enter().append("p")
+        .text(function(d) {
+            return "I’m number " + d + "!";
+        });
+    </script>
+</body>
+
+</html>

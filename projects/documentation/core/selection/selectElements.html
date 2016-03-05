@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>select Elements</title>
+</head>
+<body>
+
+	<p class='p1'>nice to meet you d3</p>
+	<p class='p1'>nice to meet you d3</p>
+	<p class='p1'>nice to meet you d3</p>
+	
+	<script src='/bower_components/d3/d3.js'></script>
+	<script>
+
+	//d3.select(selector)
+	console.log(d3.select('.p1'));
+
+	//d3.selectAll(selector)
+	console.log(d3.selectAll('.p1'));
+
+	//d3.select(node)
+	console.log(d3.select(document.getElementsByTagName('p')));
+
+	//d3.selectAll(node)
+	console.log(d3.selectAll(document.getElementsByTagName('p')));
+
+	
+
+
+
+	</script>
+</body>
+</html>

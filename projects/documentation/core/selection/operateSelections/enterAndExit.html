@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+	<script src="/bower_components/d3/d3.js"></script>
+	<script>
+		
+		d3.select("body").selectAll('div').data([4,8,15,16,23,42]).
+		enter().append("div").text(function(d){return d;});
+
+		var div = d3.select("body").selectAll("div").data([1,2,4,8,16,32],function(d){return d;});
+
+		div.enter().append("div").text(function(d,i){
+
+			return d;
+
+		});
+
+		div.exit().remove();
+
+		d3.selectAll("div").attr("index",function(d,i){
+			console.log(i);
+			return i;
+		})
+
+
+
+	</script>
+</body>
+</html>
