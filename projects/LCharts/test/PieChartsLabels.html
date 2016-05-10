@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="container" style="position: relative;">
+    </div>
+    <script src='../bower_components/d3/d3.js'></script>
+    <!-- <script src='../src/lcharts.js'></script> -->
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+    <script src="../dest/lcharts.js"></script>
+    <script>
+    var data = [
+    {
+        label: 'Lorem ipsum',
+        pr: 0.9,
+        value: 200,
+        color: '#EFB605'
+    }, {
+        label: 'Lorem ipsum',
+        pr: 0.85,
+        value: 200,
+        color: '#E79B01'
+    }, {
+        label: 'Lorem ipsum',
+        pr: 0.8,
+        value: 200,
+        color: '#E35B0F'
+    }, {
+        label: 'Lorem ipsum',
+        pr: 0.75,
+        value: 200,
+        color: '#DD092D'
+    }, {
+        label: 'Lorem ipsum',
+        pr: 0.7,
+        value: 200,
+        color: '#892E83'
+    }, {
+        label: 'Lorem ipsum',
+        pr: 0.65,
+        value: 200,
+        color: '#604BA2'
+    }, {
+        label: 'Lorem ipsum',
+        pr: 0.60,
+        value: 200,
+        color: '#2D6AA6'
+    }, {
+        label: 'Lorem ipsum',
+        pr: 0.55,
+        value: 200,
+        color: '#089384'
+    }, {
+        label: 'Lorem ipsum',
+        pr: 0.55,
+        value: 200,
+        color: '#BED53F'
+    }, {
+        label: 'Lorem ipsum',
+        pr: 0.55,
+        value: 200,
+        color: '#BED53F'
+    }, {
+        label: 'Lasting ',
+        pr: 0.55,
+        value: 1000,
+        color: '#F0F0F0'
+    }];
+
+
+
+ function init(){
+            var config = {};
+            config.width = window.innerWidth * 0.9;
+            config.data = rangeData();
+            config.container = '#container';
+            config.fontColor = "#444867";
+            config.centerText = "121";
+            var pieChartsLabels = lcharts.PieChartsLabels(config);    
+ }
+init();
+
+
+
+
+
+
+
+
+
+    //随机数据
+    function rangeData() {
+        for (var i in data) {
+            data[i]['value'] = Math.random() * 100;
+        }
+        return data;
+    }
+
+    // 更新
+    // pieChartsLabels(rangeData());
+    </script>
+</body>
+
+</html>

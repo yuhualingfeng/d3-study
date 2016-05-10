@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>D3 Pie</title>
+    <style>
+    .slice:hover {
+        fill: orangered;
+    }
+    
+    .slice {
+        transition: all 1s;
+    }
+    </style>
+</head>
+
+<body>
+    <div>
+        <svg id="pie" width='500' height='500'></svg>
+        <div>sdfsdf</div>
+    </div>
+    <script src="/bower_components/d3/d3.js"></script>
+    <script>
+    var config = {};
+    config.container = '#pie';
+    config.data = rangeData();
+    config.rx = 200;
+    config.ry = 200;
+    config.ir = 0.4;
+    config.left = 0;
+    config.top = 0;
+    drawPie(config);
+
+    function rangeData() {
+        var data = [{
+            id: 1,
+            value: 30,
+            color: 'orange'
+        }, {
+            id: 2,
+            value: 50,
+            color: 'gray'
+        }, {
+            id: 3,
+            value: 20,
+            color: 'rgb(255, 153, 0)'
+        }, {
+            id: 3,
+            value: 20,
+            color: 'rgb(255, 233, 0)'
+        }, {
+            id: 3,
+            value: 20,
+            color: 'rgb(255, 153, 255)'
+        }
+        , {
+            id: 3,
+            value: 20,
+            color: 'rgb(255, 0, 255)'
+        }, {
+            id: 3,
+            value: 20,
+            color: 'rgb(0, 153, 255)'
+        }];
+
+        for (var i in data) {
+
+            data[i]['value'] = parseInt(Math.random() * 100);
+        }
+        return data;
+    }
+
+
+    /**
+     * [drawPie description] 
+     * @param  {[String]} config.container [容器,必须]
+     * @param  {[Array]} config.data [显示的数据源,必须]
+     * @param  {[Number]} config.rx   [圆的横向半径,必须]
+     * @param  {[Number]} config.ry   [圆的纵向半径,非必须,默认值为:横向半径的值]
+     * @param  {[Number]} config.ir   [圆内空心程度,非必须,默认值为:0,值范围为0-1]
+     * @param  {[Number]} config.left [在画布中的横向偏移,非必须,默认值为0]
+     * @param  {[Number]} config.top  [在画布中的横向纵向,非必须,默认值为0]
+     */
+    function drawPie(config) {
+
+
+        var defaultConfig = {
+            container: '',
+            data: [],
+            rx: 10,
+            ry: undefined,
+            ir: 0,
+            left: 0,
+            top: 0
+        };
+        config = combineObj(defaultConfig, config);
+
+        // d3.layout.pie  构造一个新的默认的饼布局
+        var pie = d3.layout.pie().sort(null).value(function(d) {
+
+            return d.value;
+
+        });
+
+        // d3.svg.arc 新建一个弧度生成器
+        var arc = d3.svg.arc().innerRadius(config.rx * config.ir).outerRadius(config.rx);
+
+        // var slices = d3.select(config.container);
+        //     .append('g')
+        //     .attr('transform', 'translate(' + (config.rx + config.left) + ',' + ((config.ry || config.rx) + config.top) + ')')
+        //     .selectAll('path')
+        //     .data(pie(config.data));
+
+        // slices.enter()
+        //     .append('path')
+        //     .attr('fill', function(d) {
+        //         return d.data.color;
+        //     })
+        //     .attr('class', 'slice')
+        //     .attr('d',
+        //         function(d, i) {
+
+        //             return pieTop(d, config.rx, config.ry, config.ir);
+
+        //         }
+        //     )
+        //     .each(function(d) {
+        //         this._current = d;
+        //     })
+        //     .on('click', function() {
+
+
+        //         update(rangeData());
+        //     });
+
+           var  slices = d3.select(config.container).append("g").attr("transform", "translate(" + (config.rx + config.left) + "," + ((config.ry || config.rx) + config.top) + ")")
+            .attr("class", "slices");
+                    slices.selectAll(".slice").data(pie(config.data)).enter().append("path").attr("class", "slice")
+            .style("fill", function(d) { return d.data.color; })
+            .style("stroke", function(d) { return d.data.color; })
+            .attr("d",function(d){ return pieTop(d, config.rx, config.ry, config.ir);})
+            .each(function(d){this._current=d;})
+            .on('click', function() {
+
+
+                update(rangeData());
+            });
+
+
+
+        /**
+         * [update 更新数据]
+         * @param  {[type]} _data [更新的数据源]
+         * @return {[type]}       [无返回值]
+         */
+        function update(_data) {
+
+
+            //         slice       
+            // .transition().duration(1000)
+            // .attrTween("d", function(d) {
+
+            //     this._current = this._current || d;
+            //     var interpolate = d3.interpolate(this._current, d);
+            //     this._current = interpolate(0);
+            //     return function(t) {
+            //         return arc(interpolate(t));
+            //     };
+            // })
+
+            function arcTweenTop(d, i, a) {
+
+                this._current = this._current || d;
+                var interpolate = d3.interpolate(this._current, d);
+                this._current = interpolate(0);
+
+                return function(t) {
+                    // return a;
+                    return   d3.svg.arc()
+                              .outerRadius(config.rx * 1)
+                              .innerRadius(config.rx * 0.4)(d);
+                        
+                               
+                    // console.log(interpolate(t));
+                    // return pieTop(interpolate(t), config.rx, config.ry, config.ir);
+
+                };
+
+            }
+
+
+            d3.select(config.container).selectAll('.slice').data(pie(rangeData())).transition().attrTween("d", arcTweenTop);
+
+        }
+
+
+
+        /**
+         * [pieTop 计算绘制的路径]
+         * @param  {[type]} d  [单条数据]
+         * @param  {[type]} rx [横向半径]
+         * @param  {[type]} ry [纵向半径]
+         * @param  {[type]} ir [空心比例]
+         * @return {[type]}    [返回绘制的路径]
+         */
+        // if (!config.ry) {
+        //     return d3.svg.arc().innerRadius(rx * ir).outerRadius(rx)();
+
+        // }
+        function pieTop(d, rx, ry, ir) {
+            if (d.endAngle - d.startAngle == 0) return "M 0 0";
+            var sx = rx * Math.cos(d.startAngle),
+                sy = ry * Math.sin(d.startAngle),
+                ex = rx * Math.cos(d.endAngle),
+                ey = ry * Math.sin(d.endAngle);
+
+            var ret = [];
+            ret.push("M", sx, sy, "A", rx, ry, "0", (d.endAngle - d.startAngle > Math.PI ? 1 : 0), "1", ex, ey, "L", ir * ex, ir * ey);
+            ret.push("A", ir * rx, ir * ry, "0", (d.endAngle - d.startAngle > Math.PI ? 1 : 0), "0", ir * sx, ir * sy, "z");
+            return ret.join(" ");
+        }
+    }
+
+
+
+    /**
+     * [combineObj 将合obj2对象合并到obj1中]
+     * @param  {[type]} obj1 [对象1]
+     * @param  {[type]} obj2 [对象2]
+     * @return {[type]}      [合并后的对象]
+     */
+    function combineObj(obj1, obj2) {
+
+        for (var i in obj2) {
+
+            if (obj2[i] != undefined) {
+                obj1[i] = obj2[i];
+            }
+        }
+
+        return obj1;
+
+    }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>LiquidFillGauge</title>
+</head>
+
+<body>
+    <div><svg id="fillgauge1" width="100%" height="250" onclick="gauge1.update(Math.round(Math.random()*100));"></svg></div>
+    <div><svg id="fillgauge2" width="100%" height="250" onclick="gauge2.update(Math.round(Math.random()*100));"></svg></div>
+    <div><svg id="fillgauge3" width="100%" height="250" onclick="gauge3.update(Math.round(Math.random()*100));"></svg></div>
+    <script src="../bower_components/d3/d3.js"></script>
+    <!-- <script src="../src/lcharts.js"></script> -->
+    <script src="../dest/lcharts.js"></script>
+    
+    <script>
+
+
+     d3.selectAll('svg').attr({width:'100%',height:window.innerWidth*0.8});   
+
+    var LiquidFillGauge1 = new lcharts.LiquidFillGauge();
+    var gauge1 = LiquidFillGauge1.loadLiquidFillGauge("fillgauge1", 55);
+
+
+
+    var LiquidFillGauge2 = new lcharts.LiquidFillGauge();
+    var config1 = LiquidFillGauge2.liquidFillGaugeDefaultSettings();
+    config1.circleColor = "#FF7777";
+    config1.textColor = "#FF4444";
+    config1.waveTextColor = "#FFAAAA";
+    config1.waveColor = "#FFDDDD";
+    config1.circleThickness = 0.2;
+    config1.textVertPosition = 0.2;
+    config1.waveAnimateTime = 1000;
+    var gauge2 = LiquidFillGauge2.loadLiquidFillGauge("fillgauge2", 28, config1);
+
+    var LiquidFillGauge3 = new lcharts.LiquidFillGauge();
+    var config2 = LiquidFillGauge3.liquidFillGaugeDefaultSettings();
+    config2.circleColor = "#57D1DB"; //外环颜色
+    config2.textColor = "#A0D2D6"; //文字颜色
+    config2.waveTextColor = "red"; // 文字颜色
+    config2.waveColor = "#9FD2D6"; // 
+    config2.circleThickness = 0.04;
+    config2.circleFillGap = 0.06;
+    config2.textVertPosition = 0.8;
+    config2.waveAnimateTime = 2000;
+    config2.waveHeight = 0.2;
+    config2.waveCount = 1;
+    config2.displayPercent = false;
+    config2.valueCountUp = false;
+    config2.preText = '+';
+    var gauge3 = LiquidFillGauge3.loadLiquidFillGauge("fillgauge3", 50, config2);
+
+
+    </script>
+</body>
+
+</html>

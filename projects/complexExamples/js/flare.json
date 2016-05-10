@@ -1,0 +1,32 @@
+{
+    "name": "3242",
+    "children": [{
+            "name": "cluster",
+            "children": [
+                { "name": "111111", "size": 2 },
+                { "name": "222222", "size": 6 },
+                { "name": "333333", "size": 3 },
+                { "name": "444444", "size": 2 }
+            ]
+        },
+
+        {
+            "name": "graph",
+            "children": [
+                { "name": "555555", "size": 3 },
+                { "name": "666666", "size": 4 },
+                { "name": "777777", "size": 5 },
+                { "name": "888888", "size": 2 },
+                { "name": "999999", "size": 7 }
+            ]
+        },
+
+        {
+            "name": "optimization",
+            "children": [
+                { "name": "000000", "size": 7 }
+            ]
+        }
+
+    ]
+}

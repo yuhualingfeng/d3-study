@@ -1,0 +1,26 @@
+{
+    "name": "Bitter",
+    "children": [{
+        "name": "Pungent",
+        "children": [{
+            "name": "Creosol",
+            "colour": "#aaa1cc",
+            "value": 20
+        }, {
+            "name": "Phenolic",
+            "colour": "#e0b5c9",
+            "value": 100
+        }]
+    }, {
+        "name": "Harsh",
+        "children": [{
+            "name": "Caustic",
+            "colour": "#e098b0",
+            "value": 50
+        }, {
+            "name": "Alkaline",
+            "colour": "#ee82a2",
+            "value": 100
+        }]
+    }]
+}

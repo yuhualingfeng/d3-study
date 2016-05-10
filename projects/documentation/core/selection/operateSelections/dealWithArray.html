@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src='/bower_components/d3/d3.js'></script>
+</head>
+<body>
+
+<script>
+	
+
+var dataset = [
+	{id:1000,color:'red'},
+	{id:1001,color:'green'},
+	{id:1002,color:'blue'}
+];
+
+var map = d3.map(dataset,function(d){return d.id;});
+
+
+var persons = [
+{id:100,name:"zhangmoumou",year:1989,hometown:'beijing'},
+{id:101,name:"limoumou",year:1987,hometown:'beijing'},
+{id:102,name:"wangmoumou",year:1988,hometown:'shanghai'},
+{id:103,name:"zhaomoumou",year:1987,hometown:'guangzhou'},
+{id:104,name:"sunmoumou",year:1989,hometown:'shanghai'}
+];
+
+var nest = d3.nest().key(function(d){return d.year}).key(function(d){return d.hometown;}).entries(persons);
+console.log(nest);
+
+</script>
+	
+</body>
+</html>

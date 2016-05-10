@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>datum()</title>
+</head>
+<body>
+<p>Fire</p>
+<p>Water</p>
+<p>Wind</p>
+<script src='bower_components/d3/d3.js'></script>	
+<script>
+	
+var p = d3.select('body').selectAll('p');
+p.datum(7);
+
+var p2 = d3.select('body').selectAll('p');
+
+p2.append('span').text(function(d,i){
+	return ' ' + i;
+});
+
+console.log(p2.selectAll('span').datsum());
+
+//summery:
+//1 当一组元素的datum被赋值后，重新选择这组元素其datum的值依然存在
+//2 被绑定的datum数据可以传递给子元素
+//3 append()函数返回的是被添加的元素
+
+</script>
+</body>
+</html>

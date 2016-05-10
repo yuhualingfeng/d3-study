@@ -1,0 +1,32 @@
+{
+  "name": "lcharts",
+  "version": "1.0.0",
+  "description": "D3 compponents",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://www.github.com/yuhualingfeng/d3-study.git"
+  },
+  "keywords": [
+    "html",
+    "css",
+    "svg",
+    "D3"
+  ],
+  "devDependencies": {
+    "grunt": "*",
+    "grunt-autoprefixer": "*",
+    "grunt-cli": "*",
+    "grunt-contrib-concat": "^1.0.0",
+    "grunt-contrib-less": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-yui-compressor": "*",
+    "load-grunt-tasks": "*"
+  },
+  "author": "puhuasheng",
+  "license": "MIT"
+}

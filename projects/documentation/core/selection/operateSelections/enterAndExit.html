@@ -5,29 +5,47 @@
 	<title>Document</title>
 </head>
 <body>
+
+	<p>1</p>
+	<p>1</p>
+	<p>1</p>
 	
 	<script src="/bower_components/d3/d3.js"></script>
 	<script>
 		
-		d3.select("body").selectAll('div').data([4,8,15,16,23,42]).
-		enter().append("div").text(function(d){return d;});
+		// d3.select("body").selectAll('div').data([4,8,15,16,23,42]).
+		// enter().append("div").text(function(d){return d;});
 
-		var div = d3.select("body").selectAll("div").data([1,2,4,8,16,32],function(d){return d;});
+		// var div = d3.select("body").selectAll("div").data([1,2,4,8,16,32],function(d){return d;});
 
-		div.enter().append("div").text(function(d,i){
+		// div.enter().append("div").text(function(d,i){
 
-			return d;
+		// 	return d;
 
-		});
+		// });
 
-		div.exit().remove();
+		// div.exit().remove();
 
-		d3.selectAll("div").attr("index",function(d,i){
-			console.log(i);
-			return i;
-		})
+		// d3.selectAll("div").attr("index",function(d,i){
+		// 	console.log(i);
+		// 	return i;
+		// })
+		// 
+		var selection = d3.select('body').selectAll('p').data([3]);
+
+	//	selection.text('d');
 
 
+		selection.exit().remove();
+
+		var selection2 = selection.data([1,2,3]);
+		selection2.enter().append('p').text(function(d){return d;});
+
+		 selection2.style({color:'red'});
+
+		 selection2.data([3,2]).exit().remove();
+
+		 selection2.text(function(d){return d;});
 
 	</script>
 </body>

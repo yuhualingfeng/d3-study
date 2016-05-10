@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>BubbleMenu</title>
+</head>
+
+<body>
+    <div id="bubbleMenu"></div>
+    <script src="../bower_components/d3/d3.js"></script>
+    <script src="../dest/lcharts.js"></script>
+    <script>
+    var data = {
+        "name": "bubble",
+        "children": [{
+            "name": "Atlas",
+            "description": "Atlas of Global Agriculture",
+            "value": 0.4,
+            "title": '北美1',
+            "subtitle": "100000",
+            "color": "#56D1DB",
+            "children": [{
+                "name": "Geography",
+                "subName": "lenovo",
+                "color": "#56D1DB",
+                "address": "http://gli.environment.umn.edu",
+                "note": "Global crop geography, including precipitation, temperature, crop area, etc."
+            }, {
+                "name": "Crop Land",
+                "subName": "lenovo",
+                "color": "#56D1DB",
+                "address": "http://d3js.org"
+            }, {
+                "name": "Crop Yields",
+                "subName": "lenovo",
+                "color": "#56D1DB",
+                "address": "http://environment.umn.edu",
+                "note": "Maize, wheat, rice, and soybean yields in 2000"
+            }]
+        }, {
+            "name": "AgLab",
+            "description": "Virtual Lab of Global Agriculture",
+            "value": 0.35,
+            "title": '北美2',
+            "subtitle": "100000",
+            "color": "#FFBF01",
+            "children": [{
+                "name": "Excess Nutrient",
+                "subName": "lenovo",
+                "color": "#FFBF01",
+                "address": "http://d3js.org",
+                "note": "Prototype Infographics on Excess Fertilizer Nutrients"
+            }, {
+                "name": "Yield Gap",
+                "subName": "lenovo",
+                "color": "#FFBF01",
+                "address": "http://d3js.org",
+                "note": "The gap between attainable yields and actual yields, with modeled yields assuming the percentage of gap closed."
+            }, {
+                "name": "Fertilizer",
+                "subName": "lenovo",
+                "color": "#FFBF01",
+                "address": "http://sunsp.net"
+            }]
+        }, {
+            "name": "Nutshell",
+            "description": "Profiles of Country",
+            "value": 0.3,
+            "title": '北美3',
+            "subtitle": "100000",
+            "color": "#81D181",
+            "children": [{
+                "name": "Efficiency",
+                "subName": "lenovo",
+                "color": "#81D181",
+                "address": "http://d3js.org"
+            }, {
+                "name": "Excess Nutrient",
+                "subName": "lenovo",
+                "color": "#81D181",
+                "address": "http://d3js.org"
+            }, {
+                "name": "Economy",
+                "subName": "lenovo",
+                "color": "#81D181",
+                "address": "http://d3js.org"
+            }, {
+                "name": "Agriculture",
+                "subName": "lenovo",
+                "color": "#81D181",
+                "address": "http://uis.edu/ens"
+            }]
+        }, {
+            "name": "Data",
+            "description": "Crop Data in 5 minutes grid",
+            "value": 0.25,
+            "title": '北美4',
+            "subtitle": "100000",
+            "color": "#78E7E6",
+            "children": [{
+                "name": "Geography",
+                "subName": "lenovo",
+                "color": "#78E7E6",
+                "address": "http://www.earthstat.org/"
+            }, {
+                "name": "Crop Land",
+                "subName": "lenovo",
+                "color": "#78E7E6",
+                "address": "http://www.earthstat.org/"
+            }, {
+                "name": "Crop Yields",
+                "subName": "lenovo",
+                "color": "#78E7E6",
+                "address": "http://www.earthstat.org/"
+            }]
+        }, {
+            "name": "Data",
+            "description": "Crop Data in 5 minutes grid",
+            "value": 0.2,
+            "title": '北美5',
+            "subtitle": "100000",
+            "color": "#FF9474",
+            "children": [{
+                "name": "Geography",
+                "subName": "lenovo",
+                "color": "#FF9474",
+                "address": "http://www.earthstat.org/"
+            }, {
+                "name": "Crop Land",
+                "subName": "lenovo",
+                "color": "#FF9474",
+                "address": "http://www.earthstat.org/"
+            }, {
+                "name": "Crop Yields",
+                "subName": "lenovo",
+                "color": "#FF9474",
+                "address": "http://www.earthstat.org/"
+            }]
+        }]
+
+
+    };
+
+    function init() {
+        var config = {};
+
+        // config.width =window.innerWidth*0.95 || 1200;
+        config.width = 1000;
+        config.height = 300;
+        config.container = '#bubbleMenu';
+        config.data = rangeData();
+
+        var bubbleMenu = lcharts.BubbleMenu(config);
+    }
+
+    init();
+
+
+
+
+    //随机数据
+    function rangeData() {
+
+        for (var i in data.children) {
+            data.children[i]['value'] = Math.random();
+        }
+        return data;
+    }
+    //更新
+    // bubbleMenu(rangeData());
+    </script>
+</body>
+
+</html>

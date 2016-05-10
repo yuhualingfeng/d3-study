@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <svg id="pie" width='500' height='500'></svg>
+    <script src='/bower_components/d3/d3.js'></script>
+    <!--     <script>
+    var width = 400,
+        height = 400,
+        radius = Math.min(width, height) / 2,
+
+        radiusX = width / 2,
+        radiusY = height / 2;
+
+    var color = d3.scale.category20();
+
+    var pie = d3.layout.pie().value(function(d) {
+        return d.value;
+    }).sort(null);
+
+    var defaultSort = pie.sort;
+
+    var arc = d3.svg.arc().innerRadius(radius - 100).outerRadius(radius);
+
+    var svg = d3.select("body").append("svg")
+        .attr('width', width)
+        .attr('height', height)
+        .append('g')
+        .attr('transform', "translate(" + width / 2 + "," + height / 2 + ")");
+
+    function getPiePath(d, rx, ry, ir) {
+        if (d.endAngle - d.startAngle == 0) return "M 0 0";
+        var sx = rx * Math.cos(d.startAngle),
+            sy = ry * Math.sin(d.startAngle),
+            ex = rx * Math.cos(d.endAngle),
+            ey = ry * Math.sin(d.endAngle);
+
+        var ret = [];
+        ret.push("M", sx, sy, "A", rx, ry, "0", (d.endAngle - d.startAngle > Math.PI ? 1 : 0), "1", ex, ey, "L", ir * ex, ir * ey);
+        ret.push("A", ir * rx, ir * ry, "0", (d.endAngle - d.startAngle > Math.PI ? 1 : 0), "0", ir * sx, ir * sy, "z");
+        return ret.join(" ");
+    }
+
+
+    function rangeData() {
+        var data = [{
+            value: 1
+        }, {
+            value: 5
+        }, {
+            value: 2
+        }, {
+            value: 6
+        }];
+        for (var i in data) {
+            data[i]['value'] = Math.random() * 100;
+        }
+        return data;
+    }
+
+    var path = svg.selectAll('path')
+        .data(pie(rangeData()))
+        .enter().append('path')
+        .attr('fill', function(d, i) {
+            return color(i);
+        })
+        .attr("d", function(d) {
+            return getPiePath(d, radiusX, radiusY, 0.4);
+        })
+        .each(function(d) {
+            this._current = d;
+        });
+
+    setInterval(change, 2000);
+
+    var sort = false;
+
+    function change() {
+
+        sort = !sort;
+        if (sort) {
+            pie = d3.layout.pie()
+                .value(function(d) {
+                    return d.value;
+                });
+
+        } else {
+            pie = d3.layout.pie()
+                .value(function(d) {
+                    return d.value;
+                })
+                .sort(null);
+        }
+
+        path = path.data(pie(rangeData()));
+
+        path.transition().duration(750).attrTween("d", arcTween);
+
+
+    }
+
+    function arcTween(a) {
+        var i = d3.interpolate(this._current, a);
+        this._current = i(0);
+        return function(t) {
+            return getPiePath(i(t), radiusX, radiusY, 0.4);
+            return arc(i(t));
+        }
+    }
+    </script> -->
+    <script>
+    /**
+     * [DrawPie 圆形绘制]
+     * @param {[String]} config.id [svg容器id]
+     * @param {[Object]} config.data [展示的数据源]
+     * @param {[Number]} config.x [x轴偏移量]
+     * @param {[Number]} config.y [y轴偏移量]
+     * @param {[Number]} config.rx [x轴半径]
+     * @param {[Number]} config.ry [y轴半径]
+     * @param {[Number]} config.ir [内圆半径]
+     */
+    function DrawPie(config) {
+
+        var pie = d3.layout.pie().value(function(d, i) {
+            return d.value;
+        });
+
+        var svg = d3.select('#' + config.id),
+            transform = 'translate(' + (config.rx + config.x) + ',' + (config.ry + config.y) + ')';
+
+        svg.append('g').attr('transform', transform).attr('class', 'slices');
+        svg.append('g').attr('transform', transform).attr('class', 'labels');
+        svg.append('g').attr('transform', transform).attr('class', 'lines');
+
+
+
+        function getPiePath(d, rx, ry, ir) {
+            if (d.endAngle - d.startAngle == 0) return "M 0 0";
+            var sx = rx * Math.cos(d.startAngle),
+                sy = ry * Math.sin(d.startAngle),
+                ex = rx * Math.cos(d.endAngle),
+                ey = ry * Math.sin(d.endAngle);
+
+            var ret = [];
+            ret.push("M", sx, sy, "A", rx, ry, "0", (d.endAngle - d.startAngle > Math.PI ? 1 : 0), "1", ex, ey, "L", ir * ex, ir * ey);
+            ret.push("A", ir * rx, ir * ry, "0", (d.endAngle - d.startAngle > Math.PI ? 1 : 0), "0", ir * sx, ir * sy, "z");
+            return ret.join(" ");
+        }
+
+
+        this.update = function(data) {
+
+            /*pie begin*/
+            var slice = svg.select('.slices').selectAll('path.slice').data(pie(data));
+            slice.enter().append('path')
+                .attr('class', 'slice')
+                .attr('fill', function(d, i) {
+                    return d.data.color;
+                });
+
+            slice.transition().duration(750).attrTween('d', function(d, i) {
+                this._current = this._current || d;
+                var interpolate = d3.interpolate(this._current, d);
+                this._current = interpolate(0);
+                return function(t) {
+
+                    if (d.data.or)
+                        return d3.svg.arc().innerRadius(config.ir * config.rx).outerRadius(d.data.or * config.rx)(interpolate(t));
+
+                    return getPiePath(interpolate(t), config.rx, config.ry, config.ir);
+                }
+            });
+
+            slice.exit().remove();
+            /*pie end*/
+
+            /*text begin*/
+            var text = svg.select('.labels').selectAll('.label').data(pie(data));
+            text.enter().append('text')
+                .attr('dy', '0.35em')
+                .attr('class', 'label')
+                .attr('fill', d3.scale.category20()('fddf'))
+                .text(function(d) {
+                    return d.data.label;
+                });
+
+            function midAngle(d) {
+
+                return d.startAngle + (d.endAngle - d.startAngle) / 2;
+
+            }
+
+            var outerArc = d3.svg.arc()
+                .innerRadius(config.rx * 0.9)
+                .outerRadius(config.rx * 0.9);
+
+            text.transition().duration(1000)
+                .attrTween("transform", function(d) {
+                    this._current = this._current || d;
+                    var interpolate = d3.interpolate(this._current, d);
+                    this._current = interpolate(0);
+                    return function(t) {
+                        var d2 = interpolate(t);
+                        var pos = outerArc.centroid(d2);
+                        pos[0] = config.rx * (midAngle(d2) < Math.PI ? 1 : -1);
+                        return "translate(" + pos + ")";
+                    };
+                })
+                .styleTween("text-anchor", function(d) {
+                    this._current = this._current || d;
+                    var interpolate = d3.interpolate(this._current, d);
+                    this._current = interpolate(0);
+                    return function(t) {
+                        var d2 = interpolate(t);
+                        return midAngle(d2) < Math.PI ? "start" : "end";
+                    };
+                });
+
+            text.exit()
+                .remove();
+
+            /*text end*/
+
+
+
+        };
+
+    }
+
+    var color = d3.scale.category20();
+
+    function rangeData() {
+        var data = [{
+            value: 1,
+            // or: 1,
+            color: color(1)
+        }, {
+            value: 2,
+            color: color(2)
+        }, {
+            value: 3,
+            color: color(3)
+        }, {
+            value: 4,
+            color: color(4)
+        }, {
+            value: 5,
+            color: color(5)
+        }, {
+            value: 6,
+            color: color(6)
+        }];
+        for (var i in data) {
+            data[i]['value'] = Math.random() * 100;
+            //   data[i]['or'] = random(0.4,1);
+            data[i]['label'] = 'value' + i;
+        }
+        return data;
+    }
+
+    function random(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+
+    var config = {
+        id: 'pie',
+        data: rangeData(),
+        x: 0,
+        y: 0,
+        rx: 200,
+        ry: 200,
+        ir: 0.4
+    };
+    var drawPie = new DrawPie(config);
+    drawPie.update(rangeData());
+    d3.select('#pie').selectAll('.slice').on('click', function(d, i) {
+        drawPie.update(rangeData());
+    });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>svg</title>
+</head>
+<body>
+
+<svg width="100%" height="4000">
+	
+
+	<g>
+		<rect id ='rect1' x='0' y='0' width='400' height='200' rx='0' ry='0'></rect>
+		<rect id='rect2' x='450' y='0' width='200' height='200' rx='20' ry='20'></rect>
+	</g>
+
+
+	<g transform='translate(0,250)'>
+		
+		<circle id ='circle1' cx='100' cy='100' r='100'></circle>
+		<circle id ='circle2' cx='300' cy='100' r='80'></circle>
+
+	</g>
+
+	<g transform='translate(0,500)'>
+		<ellipse id='ellipse1' cx='100' cy='100' rx='100' ry='80'></ellipse>
+		<ellipse id='ellipse2' cx='300' cy='100' rx='80' ry='100'></ellipse>
+	</g>
+
+	<g transform='translate(0,750)'>
+		<line id='line1' x1='0' y1='0' x2='100' y2='200'></line>
+		<line id='line2' x1='200' y1='100' x2='400' y2='100'></line>
+	</g>
+
+	<g transform='translate(0,1000)'>
+		<polyline id='polyline1' points='0,0 100,100 200,0 300,100'></polyline>
+		<polyline id="polyline2" points='400,20 420,50 500,80 530,10'></polyline>
+	</g>
+
+	<g transform="translate(0,1250)">
+		<polygon id='polygon1' points='0,0,100,100, 200,0 300,100'></polygon>
+		<polygon id="polygon2" points='400,20 420,50 500,80 530,10'></polygon>
+	</g>
+	
+	<!-- 
+	path参数说明：
+
+	M：move to
+	L: line to
+	H: horizontal lineto
+	V: vertical lineto
+
+	C:curveto
+	S:shorthand/smooth curveto
+
+	Q:quadratic Bezier curveto
+	T:shorthand/smooth quadratic Bezier curveto
+
+	A:elliptical arc
+
+	Z:closepath
+
+	M L H V C S Q T A Z 
+
+	 -->
+	<g transform="translate(0,1500)">
+		<path d="M10,10 L200,200 M10,10 H200 M10,10 V200" id="path1"></path>
+		<path d='M250,50 C280,0 350,0 420,50 S560,100 610,50' id='path2'></path>
+	</g>
+
+	<g transform="translate(0,1750)">
+		<path id='path3' d='M30,100 Q190,20 270,100 T450,100'></path>
+	</g>
+	<g transform="translate(0,2000)">
+		<path id='path4' d='M0,0 A20,20 0 1,0 100,100'></path>
+	</g>
+
+	<g transform="translate(0,2250)">
+		<text x='100' y='100' dx='20' dy='20' rotate='40' textLength='100'>I love D3</text>
+	</g>
+
+	<defs>
+
+		<marker id='arrow' markerUnits='strokeWidth' markerWidth='12' markerHeight='12' viewBox='0 0 12 12' refX='6' refY='6' orient='auto'>
+			<path d='M2,2 L10,6 L2,10 L6,6 L2,2' style='fill:#000;'></path>
+		</marker>
+		<filter id='GaussianBlur'>
+
+		<feGaussianBlur in="SourceGtaphic" stdDeviation='2'></feGaussianBlur>
+			
+		</filter>
+
+		<linearGradient id="myGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+			<stop offset="0%" stop-color="#F00"></stop>
+			<stop offset="100%" stop-color="#0ff"></stop>
+		</linearGradient>
+
+	</defs>
+
+	<g transform='translate(0,2500)'>
+		<line x1='0' y1='0' x2='100' y2='100' marker-end='url(#arrow)' stroke='red' stroke-width='2'></line>
+		<path d='M120,100 C150,0 200,30 250,100 S400,80 450,20' fill='white' marker-start='url(#arrow)' marker-mid='url(#arrow)' marker-end='url(#arrow)' stroke='red' stroke-width='3'></path>
+	</g>
+
+	<g transform="translate(0,2750)">
+		<rect x='0' y='0' width='150' height='100' fill='blue'></rect>
+		<rect x="200" y="0" width="150" height="100" fill="blue" filter="url(#GaussianBlur)"></rect>
+	</g>
+
+	<g transform="translate(0,3000)">
+		<rect fill="url(#myGradient)" x="10" width="300" height="100"></rect>
+	</g>
+
+
+</svg>
+	
+	<script src='/bower_components/d3/d3.js'></script>
+	<script type="text/javascript">
+
+		var color = d3.scale.category20();
+		d3.select('#rect1').style('fill',color('rect1'));
+		d3.select('#rect2').attr('fill',color('rect2'));
+
+		d3.select("#circle1").attr('fill',color('circle1'));
+		d3.select("#circle2").attr('fill',color('circle2'));
+
+		d3.select('#ellipse1').attr('fill',color('ellipse1'));
+		d3.select('#ellipse2').attr('fill',color('ellipse2'));
+
+		d3.select("#line1").attr('stroke',color('line1')).attr('stroke-width',4);
+		d3.select("#line2").attr('stroke',color('line2')).attr('stroke-width',4);
+
+		d3.select('#polyline1').attr('stroke',color('polyline1')).attr('stroke-width',4).attr('fill','white');
+		d3.select('#polyline2').attr('stroke',color('polyline2')).attr('stroke-width',4).attr('fill','white');
+
+		d3.select('#polygon1').attr('fill',color('polygon1'));
+		d3.select('#polygon2').attr('fill',color('polygon2'));
+
+		d3.select('#path1').attr('stroke',color('path1')).attr('stroke-width',4);
+		d3.select('#path2').attr('fill','white').attr('stroke',color('path2')).attr('stroke-width',4);
+		d3.select('#path3').attr('fill','white').attr('stroke',color('path3')).attr('stroke-width',4);
+
+
+
+	</script>
+</body>
+</html>

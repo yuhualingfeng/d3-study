@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>datum()</title>
+</head>
+<body>
+<p>Lion</p>
+<p>Tigger</p>
+<p>Leopard</p>
+<script src='bower_components/d3/d3.js'></script>	
+<script>
+
+var dataset = [3,6,9,12,15];
+
+var p = d3.select('body').selectAll('p');
+
+var update = p.data(dataset);
+
+update.enter().append('p');
+
+d3.select('body').selectAll('p').text(function(d){return d;});
+
+var dataset2 = [2,3];
+
+var update2 = d3.select('body').selectAll('p').data(dataset2);
+
+update2.exit().remove();
+
+
+//summery
+//1 data()方法为选中的元素绑定数据
+//2 enter()方法的作用主要是添加元素
+//3 exit()方法的作用是删除多余的元素
+
+
+</script>
+</body>
+</html>
